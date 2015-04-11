@@ -19,10 +19,24 @@
           // Add event Listern to input for change, with onFileChanged as handler
           document.getElementById("fileElem").addEventListener("change", onFileChanged);
       }
-      // Will alert the name of the file?
-      function onFileChanged(evt) {
-        window.file = evt;
-        alert("You selected a file: " + evt.target.files[0].name);
+      // Handler when a file is added to input
+      function onFileChanged(theEvt) {
+        // Array of files with .files property
+        var files = theEvt.target.files;
+        window.filesList = files;
+        // cache total number of Bytes
+        var totalBytes = 0;
+        // iterate over the files
+        for (var i = 0; i < files.length; i++) {
+          // create a p tag
+          var fileInfo = "<p>File name: " + files[i].name + " size: " + files[i].size + "; type: " + files[i].type + "</p>";
+          // increment total bytes
+          totalBytes += files[i].size;
+          // add created p tag to div with id filedata
+          document.getElementById('filedata').innerHTML += fileInfo;
+        }
+        // add total bytes
+        document.getElementById('filedata').innerHTML += "<p>Total of " + files.length + " files, " + totalBytes + " bytes.</p>";
       }
 
       // Add listern on the window, init as handler
@@ -30,13 +44,11 @@
     </script>
   </head>
   <body>
-    <h1>Using the File Input type</h1>
+    <h1>Handling Multiple Files</h1>
     <form action="">
       <label>Select a file: </label>
-      <input type="file" name="files" id="fileElem"/>
+      <input type="file" name="files" id="fileElem" multiple="multiple"/>
     </form>
-    <p>File Name: <span id="filename"></span</p>
-    <p>File Size: <span id="filesize"></span</p>
-    <p>File Type: <span id="filetype"></span</p>
+    <div id="filedata"></div>
   </body>
 </html>
