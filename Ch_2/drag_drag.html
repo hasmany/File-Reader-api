@@ -23,8 +23,38 @@
             alert("This browser doesn't support the File API");
             return;
         }
+        document.getElementById("filedrop").addEventListener("drop", onFilesDropped);
+        document.getElementById("filedrop").addEventListener("dragover", onDragOver);
 
     }
+
+    // Stops event bubbling up and default browser behavior
+    // default maybe to open the file for an example, we want the div
+    // to handle that.
+    function onDragOver(theEvt) {
+      theEvt.stopPropagation();
+      theEvt.preventDefault();
+    }
+    // Handler function when the file is dropped, will effect UI
+    function onFilesDropped(theEvt) {
+      // Stops file from being opened
+      theEvt.stopPropagation();
+      theEvt.preventDefault();
+      // Proeprty dataTransfer is associated with drag/drop, used instead of target
+      var files = theEvt.dataTransfer.files;
+      var totalBytes = 0;
+      // emtpy div each time
+      document.getElementById('filedata').innerHTML = "";
+
+      for (var i = 0; i < files.length; i++) {
+          var fileInfo = "<p>File name: " + files[i].name + "; size: " + files[i].size + "; type: " + files[i].type + "</p>";
+          totalBytes += files[i].size;
+          document.getElementById('filedata').innerHTML += fileInfo;
+      }
+      document.getElementById('filedata').innerHTML += "<p>Total of " + files.length + " files, " + totalBytes + " bytes.";
+    }
+
+    // Add Event Listeners to filedrop location for drop and drag
 
     window.addEventListener("load", init);
 </script>
