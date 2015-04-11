@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+  <html>
+  <head>
+  <style type="text/css">
+    body
+    {
+        font-size:18pt;
+    }
+  </style>
+  <title>Reading a Text File</title>
+  <script type="text/javascript">
+      function init() {
+          var bHaveFileAPI = (window.File && window.FileReader);
+
+          if (!bHaveFileAPI) {
+              alert("This browser doesn't support the File API");
+              return;
+          }
+
+          document.getElementById("fileElem").addEventListener("change", onFileChanged);
+      }
+
+      function onFileChanged(theEvt) {
+        // Get file from event object using file API
+        var thefile = theEvt.target.files[0];
+        var totalBytes = 0;
+        // If file is not a text file, exit out of function
+        if (thefile.type != "text/plain") {
+          document.getElementById("filecontents").innerHTML = "No text file chosen";
+          return;
+        }
+        // Create file reader object
+        var reader = new FileReader();
+        // Event listener on file reader object to when reader is finished reading
+        // the file
+        reader.onload = function(evt) {
+          // Save result of file reading to variable, and add to div
+          var resultText = evt.target.result;
+          window.eventObject = evt;
+          document.getElementById('filecontents').innerHTML = resultText;
+        }
+        // Kick off the reading process, reader will try to read
+        // below will trigger onload when readASText is done
+        reader.readAsText(thefile);
+      }
+
+      window.addEventListener("load", init);
+  </script>
+  </head>
+  <body>
+    <h1>Reading File Data as Text</h1>
+    <form action="">
+      <label>Select a file: </label>
+      <input type="file" name="files" id="fileElem" />
+    </form>
+    <p>File contents: </p>
+    <textarea cols="80" rows="10" id="filecontents"></textarea>
+  </body>
+</html>
+
