@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style type="text/css">
+    body
+    {
+        font-size:18pt;
+    }
+    #filedrop
+    {
+        width: 300px;
+        height: 200px;
+        color: Gray;
+        border: 10px dashed #9a9a9a;
+    }
+</style>
+<title>Using Drag and Drop</title>
+<script type="text/javascript">
+    function init() {
+        var bHaveFileAPI = (window.File && window.FileReader);
+
+        if (!bHaveFileAPI) {
+            alert("This browser doesn't support the File API");
+            return;
+        }
+
+    }
+
+    window.addEventListener("load", init);
+</script>
+</head>
+<body>
+  <h1>Using Drag and Drop</h1>
+  <p>Drop files here: </p>
+  <div id="filedrop"></div>
+  <p>File Information: </p>
+  <div id="filedata"></div>
+</body>
+</html>
+
