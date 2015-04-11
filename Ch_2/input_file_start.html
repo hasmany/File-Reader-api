@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style type="text/css">
+      body {
+        font-size: 18px;
+      }
+    </style>
+    <script type="text/javascript">
+
+      function init() {
+          // Evalutes to true if both File and FileReader are present
+          var bHaveFileAPI = (window.File && window.FileReader);
+          // Return out of function if file or filereader is not present
+          if (!bHaveFileAPI) {
+              alert("This browser doesn't support the File API");
+              return;
+          }
+          // Add event Listern to input for change, with onFileChanged as handler
+          document.getElementById("fileElem").addEventListener("change", onFileChanged);
+      }
+
+      // Add listern on the window, init as handler
+      window.addEventListener("load",init);
+    </script>
+  </head>
+  <body>
+    <h1>Using the File Input type</h1>
+    <form action="">
+      <label>Select a file: </label>
+      <input type="file" name="files" id="fileElem"/>
+    </form>
+  </body>
+</html>
